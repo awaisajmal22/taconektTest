@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../RoutesAndBindings/aap_routes.dart';
 import '../../Auth/SignUp/Model/bottom_sheet_model.dart';
 import '../../Auth/SignUp/Model/user_model.dart';
 import 'package:path/path.dart' as path;
@@ -65,9 +66,10 @@ class ProfileViewModel extends GetxController {
   CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
 
-  updateData(
-      {required String firstName,
-      required String lastName,}) async {
+  updateData({
+    required String firstName,
+    required String lastName,
+  }) async {
     UserModel userModel = UserModel();
 
     // Reference storage = await FirebaseStorage.instance
@@ -80,7 +82,11 @@ class ProfileViewModel extends GetxController {
     await FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
       'first name': userModel.firstName,
       'last name': userModel.lastName,
-      
     });
+  }
+
+  final auth = FirebaseAuth.instance;
+  signOut() async {
+    await auth.signOut().whenComplete(() => Get.offAllNamed(AppRoutes.loginView));
   }
 }

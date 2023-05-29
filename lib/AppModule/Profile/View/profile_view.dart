@@ -219,6 +219,21 @@ class ProfileView extends StatelessWidget {
                                   widget: appText(
                                       title: 'update', fontSize: 15.sp)),
                             ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            FadeAnimation(
+                              delay: 2.8,
+                              child: appButton(
+                                  buttonHeight: 6.h,
+                                  butonWidth:
+                                      MediaQuery.of(context).size.width * 100,
+                                  voidCallback: () async {
+                                    profileVM.signOut();
+                                  },
+                                  widget: appText(
+                                      title: 'Logout', fontSize: 15.sp)),
+                            ),
                           ]);
                     }))));
   }
