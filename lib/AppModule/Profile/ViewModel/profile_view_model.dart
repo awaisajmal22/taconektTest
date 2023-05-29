@@ -67,14 +67,20 @@ class ProfileViewModel extends GetxController {
 
   updateData(
       {required String firstName,
-      required String lastName,
-      required File imageUrl}) async {
-    Reference storage = await FirebaseStorage.instance
-        .ref()
-        .child('profile/${path.basename(imageUrl.path)}');
-    await storage.putFile(File(imageUrl.path));
-    String image = await storage.getDownloadURL();
-    FirebaseFirestore.instance.collection('users').doc(user!.uid).update(
-        {'first name': firstName, 'last name': lastName, 'image': image});
+      required String lastName,}) async {
+    UserModel userModel = UserModel();
+
+    // Reference storage = await FirebaseStorage.instance
+    //     .ref()
+    //     .child('profile/${path.basename(imageUrl.path)}');
+    // await storage.putFile(File(imageUrl.path));
+    // String image = await storage.getDownloadURL();
+    userModel.firstName = firstName;
+    userModel.lastName = lastName;
+    await FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
+      'first name': userModel.firstName,
+      'last name': userModel.lastName,
+      
+    });
   }
 }

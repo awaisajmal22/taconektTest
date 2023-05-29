@@ -65,12 +65,14 @@ class ProfileView extends StatelessWidget {
                                               });
                                         },
                                         child: CircleAvatar(
+                                            backgroundColor: AppColor.shadow5D,
                                             radius: 50, //width of Avatar
                                             backgroundImage: NetworkImage(
                                                 "${userData['image']}")),
                                       )
                                     : GestureDetector(
                                         child: CircleAvatar(
+                                          backgroundColor: AppColor.whiteFC,
                                           radius: 50,
                                           backgroundImage: NetworkImage(
                                               'https://cdn-icons-png.flaticon.com/512/2815/2815428.png'),
@@ -146,9 +148,8 @@ class ProfileView extends StatelessWidget {
                                         },
                                         suffixIcon: const Icon(null),
                                         controller:
-                                            profileVM.firstNameController
-                                              ..text = userData['first name'],
-                                        hintText: 'First Name'),
+                                            profileVM.firstNameController,
+                                        hintText: userData['first name']),
                                     Container(
                                       height: 1,
                                       width: MediaQuery.of(context).size.width *
@@ -165,9 +166,9 @@ class ProfileView extends StatelessWidget {
                                           }
                                         },
                                         suffixIcon: const Icon(null),
-                                        controller: profileVM.lastNameController
-                                          ..text = userData['last name'],
-                                        hintText: 'Last Name'),
+                                        controller:
+                                            profileVM.lastNameController,
+                                        hintText: userData['last name']),
                                   ],
                                 ),
                               ),
@@ -207,19 +208,13 @@ class ProfileView extends StatelessWidget {
                                   butonWidth:
                                       MediaQuery.of(context).size.width * 100,
                                   voidCallback: () async {
-                                    if (profileVM.formKey.currentState!
-                                        .validate()) {
-                                      if (profileVM.image.value != '') {
-                                        profileVM.updateData(
-                                            firstName: profileVM
-                                                .firstNameController.text,
-                                            lastName: profileVM
-                                                .lastNameController.text,
-                                            imageUrl:
-                                                File(profileVM.image.value));
-                                        Get.back();
-                                      }
-                                    }
+                                    profileVM.updateData(
+                                      firstName: profileVM
+                                          .firstNameController.value.text,
+                                      lastName: profileVM
+                                          .lastNameController.value.text,
+                                    );
+                                    Get.back();
                                   },
                                   widget: appText(
                                       title: 'update', fontSize: 15.sp)),
